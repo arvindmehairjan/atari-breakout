@@ -2,13 +2,8 @@
 const PADDLE_WIDTH = 0.1; // paddle width as a fraction of screen width
 const PADDLE_SPEED = 0.5; // fraction of screen width per second
 const BALL_SPEED = 0.5; // ball speed fraction of screen width per second
-const BALL_SPIN = 1; // ball deflection of the paddle (0 = no spin, 1 = high spin)
-
-// Derived dimensions
-var height, width, wall;
-height = window.innerHeight; // pixels
-width = window.innerWidth;
-wall = width / 50;
+const BALL_SPIN = 0.2; // ball deflection of the paddle (0 = no spin, 1 = high spin)
+const WALL = 0.02 // wall/ball paddle size as a fraction of the shortest screen dimension
 
 // Colours
 const COLOR_BACKGROUND = "#000000"; // black
@@ -23,15 +18,14 @@ const Direction = {
     STOP: 2
 }
 
-// Game canvas
+// Game canvas & context
 var canv = document.createElement("canvas");
-canv.width = width;
-canv.height = height;
 document.body.appendChild(canv);
-
-// Context (Refer to the object to which a function belongs.)
 var ctx = canv.getContext("2d"); 
-ctx.linewidth = wall; // thickness wall
+
+//Dimensions
+var height, width, wall;
+setDimensions();
 
 // Game variables
 var ball, paddle;
@@ -40,8 +34,13 @@ var ball, paddle;
 newGame();
 
 // Event listeners
+canv.addEventListener("touchcancel", touchCancel);
+canv.addEventListener("touchend", touchEnd);
+canv.addEventListener("touchmove", touchMove);
+canv.addEventListener("touchstart", touchStart);
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
+window.addEventListener("resize", setDimensions);
 
 // Game loop
 var timeDelta, timeLast; 
@@ -166,14 +165,55 @@ function serve() {
 
     // Ball already in motion and not changing direction of the ball.
     if (ball.yv != 0) {
-        return;
+        return false;
     }
 
     // random angle
     let angle = Math.random() * Math.PI / 2 + Math.PI / 4;
     // Apply ball speed for the angle
     applyBallSpeed(angle);
+    return true;
 
+}
+
+function setDimensions() {
+    height = window.innerHeight; 
+    width = window.innerWidth;
+    wall = WALL * (height < width ? height : width);
+    canv.width = width;
+    canv.height = height;
+    ctx.linewidth = wall; // thickness wall
+    paddle = new Paddle();
+    ball = new Ball();
+}
+
+function touch(x) {
+    if (!x) {
+        movePaddle(Direction.STOP);
+    } else if (x > paddle.x) {
+        movePaddle(Direction.RIGHT);
+    } else if (x < paddle.x) {
+        movePaddle(Direction.LEFT);
+    }
+}
+
+function touchCancel(ev) {
+    touch(null); 
+}
+
+function touchEnd(ev) {
+    touch(null); 
+}
+
+function touchMove(ev) {
+    touch(ev.touches[0].clientX);
+}
+
+function touchStart(ev) {
+    if (serve()) {
+        return;
+    } 
+    touch(ev.touches[0].clientX);
 }
 
 function updateBall(delta) {
@@ -241,7 +281,7 @@ function Ball() {
 
 // Positioning paddle
 function Paddle() {
-    this.w = PADDLE_width * width;
+    this.w = PADDLE_WIDTH * width;
     this.h = wall;
     this.x = canv.width / 2;
     this.y = canv.height - this.h * 3;
