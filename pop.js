@@ -1,21 +1,20 @@
 // Game parameters
-const HEIGHT = 550; // pixels
-const PADDLE_SPEED = 0.7; // fraction of screen width per second
+const PADDLE_WIDTH = 0.1; // paddle width as a fraction of screen width
+const PADDLE_SPEED = 0.5; // fraction of screen width per second
 const BALL_SPEED = 0.5; // ball speed fraction of screen width per second
 const BALL_SPIN = 1; // ball deflection of the paddle (0 = no spin, 1 = high spin)
 
 // Derived dimensions
-const WIDTH = HEIGHT * 0.9;
-const WALL = WIDTH / 50;
-const PADDLE_HEIGHT = WALL;
-const BALL_SIZE = WALL;
-const PADDLE_WIDTH = PADDLE_HEIGHT * 5;
+var height, width, wall;
+height = window.innerHeight; // pixels
+width = window.innerWidth;
+wall = width / 50;
 
 // Colours
 const COLOR_BACKGROUND = "#000000"; // black
 const COLOR_PADDLE = "#ffffff"; // white
 const COLOR_BALL = "#FF0000"; // red
-const COLOR_WALL = "#969696"; // grey
+const COLOR_wall = "#969696"; // grey
 
 // Definitions
 const Direction = {
@@ -26,13 +25,13 @@ const Direction = {
 
 // Game canvas
 var canv = document.createElement("canvas");
-canv.width = WIDTH;
-canv.height = HEIGHT;
+canv.width = width;
+canv.height = height;
 document.body.appendChild(canv);
 
 // Context (Refer to the object to which a function belongs.)
 var ctx = canv.getContext("2d"); 
-ctx.lineWidth = WALL; // thickness wall
+ctx.linewidth = wall; // thickness wall
 
 // Game variables
 var ball, paddle;
@@ -63,7 +62,7 @@ function loop(timeNow) {
 
     // Draw 
     drawBackground();
-    drawWalls();
+    drawwalls();
     drawPaddle();
     drawBall();
 
@@ -95,14 +94,14 @@ function drawBackground() {
     ctx.fillRect(0, 0, canv.width, canv.height);
 }
 
-function drawWalls() {
-    let halfWall = WALL * 0.5;
-    ctx.strokeStyle = COLOR_WALL;
+function drawwalls() {
+    let halfwall = wall * 0.5;
+    ctx.strokeStyle = COLOR_wall;
     ctx.beginPath();
-    ctx.moveTo(halfWall, HEIGHT);
-    ctx.lineTo(halfWall, halfWall);
-    ctx.lineTo(WIDTH - halfWall, halfWall);
-    ctx.lineTo(WIDTH - halfWall, HEIGHT);
+    ctx.moveTo(halfwall, height);
+    ctx.lineTo(halfwall, halfwall);
+    ctx.lineTo(width - halfwall, halfwall);
+    ctx.lineTo(width - halfwall, height);
     ctx.stroke();
 }
 
@@ -182,14 +181,14 @@ function updateBall(delta) {
     ball.y += ball.yv * delta;
 
     // Bounce the ball of the walls
-    if (ball.x < WALL + ball.w * 0.5) {
-        ball.x = WALL + ball.w * 0.5;
+    if (ball.x < wall + ball.w * 0.5) {
+        ball.x = wall + ball.w * 0.5;
         ball.xv = -ball.xv;
-    } else if (ball.x > canv.width - WALL - ball.w * 0.5) {
-        ball.x = canv.width - WALL - ball.w * 0.5;
+    } else if (ball.x > canv.width - wall - ball.w * 0.5) {
+        ball.x = canv.width - wall - ball.w * 0.5;
         ball.xv = -ball.xv;
-    } else if (ball.y < WALL + ball.h * 0.5) {
-        ball.y = WALL + ball.h * 0.5;
+    } else if (ball.y < wall + ball.h * 0.5) {
+        ball.y = wall + ball.h * 0.5;
         ball.yv = -ball.yv;
     }
 
@@ -222,31 +221,31 @@ function updatePaddle(delta) {
     paddle.x += paddle.xv * delta;
 
     // stop paddle at walls
-    if (paddle.x < WALL + paddle.w * 0.5) {
-        paddle.x = WALL + paddle.w * 0.5;
-    } else if (paddle.x > canv.width - WALL - paddle.w * 0.5) {
-        paddle.x = canv.width - WALL - paddle.w * 0.5;
+    if (paddle.x < wall + paddle.w * 0.5) {
+        paddle.x = wall + paddle.w * 0.5;
+    } else if (paddle.x > canv.width - wall - paddle.w * 0.5) {
+        paddle.x = canv.width - wall - paddle.w * 0.5;
     }
 }
 // Positioning the ball
 function Ball() {
-    this.w = BALL_SIZE;
-    this.h = BALL_SIZE;
+    this.w = wall;
+    this.h = wall;
     // Ball sitting on the paddle
     this.x = paddle.x;
     this.y = paddle.y - paddle.h / 2 - this.h / 2;
-    this.spd = BALL_SPEED * WIDTH;
+    this.spd = BALL_SPEED * height;
     this.xv = 0;
     this.yv = 0;
 }
 
 // Positioning paddle
 function Paddle() {
-    this.w = PADDLE_WIDTH;
-    this.h = PADDLE_HEIGHT;
+    this.w = PADDLE_width * width;
+    this.h = wall;
     this.x = canv.width / 2;
     this.y = canv.height - this.h * 3;
-    this.spd = PADDLE_SPEED * WIDTH;
+    this.spd = PADDLE_SPEED * width;
     this.xv = 0;
 }
 
