@@ -1,6 +1,7 @@
 # Atari-breakout game clone
 
-This is the source code of the 1976 Atari breakout game clone I have made. It is made with HTML, CSS and JavaScript.
+This is the source code of the 1976 Atari breakout game clone I have made. It is made with HTML, CSS and JavaScript.<br>
+<br>
 ![breakout-game](https://user-images.githubusercontent.com/18035227/52537162-a2ed8c80-2d63-11e9-8e8e-550011343b8f.jpg)
 
 ## Prerequisites
