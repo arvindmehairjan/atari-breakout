@@ -1,7 +1,7 @@
 {
-    "name": "Pomodoro Timer",
+    "name": "Breakout Game",
     "version": "1.0",
-    "description": "A time management tool to track your time more efficiently and focus on your work.",
+    "description": "A clone of the 1976-classic game Breakout made by Atari",
     "manifest_version": 2,
     "icons": {"128": "icon_128.png"},
     "browser_action": {
