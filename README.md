@@ -2,8 +2,8 @@
 
 This is the source code of the 1976 Atari breakout game clone I have made. It is made with HTML, CSS and JavaScript
 
-# Prerequisites
+## Prerequisites
 
 To run this game you need:
-<li> A browser like Chrome or Firefox </li>
-<li> An IDE. An example is VS Code </li>
+<li> A browser like <a href="https://www.google.com/chrome/">Chrome</a> or <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a>. </li>
+<li> An IDE. An example is <a href="https://code.visualstudio.com/">VS Code</a>. </li>
