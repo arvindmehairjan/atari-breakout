@@ -18,11 +18,11 @@ No need to install. Just run <code>index.html</code> in the browser.
 
 Instructions to play the game:
 
-Press <code> spacebar </code> to shoot.
-Press <code> left arrow key</code> to go <b>left</b>.
+Press <code> spacebar </code> to shoot.<br>
+Press <code> left arrow key</code> to go <b>left</b>.<br>
 Press <code> right arrow key </code> to go <b>right</b>.
 
-If you lost press <code>spacebar</code> to play the game again. 
+If you have lost, press <code>spacebar</code> to play the game again. 
 
 ## License
 
