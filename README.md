@@ -26,7 +26,7 @@ If you have lost, press <code>spacebar</code> to play the game again.
 
 ## License
 
-This game is licensed under the <a href="https://opensource.org/licenses/MIT> MIT License </a> and can be modified for non-commercial or commercial purposes.
+This game is licensed under the <a href="https://opensource.org/licenses/MIT"> MIT License </a> and can be modified for non-commercial or commercial purposes.
 
 ## Resources used to build this game
 <li><a href="https://developer.mozilla.org/en-US/">MDN</a> </li>
